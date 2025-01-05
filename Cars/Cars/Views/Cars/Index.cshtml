@@ -1,0 +1,33 @@
+﻿@model List<Cars.Models.CarsViewModel>
+
+<h1>Cars List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Model</th>
+            <th>Color</th>
+            <th>Plate</th>
+            <th>Mileage</th>
+            <th>Made</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var car in Model)
+        {
+            <tr>
+                <td>@car.Model</td>
+                <td>@car.Color</td>
+                <td>@car.Plate</td>
+                <td>@car.Mileage</td>
+                <td>@car.Made.ToString("dd-MM-yyyy")</td>
+                <td>
+                    <a href="#">Edit</a> |
+                    <a href="#">View</a> |
+                    <a href="#">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
