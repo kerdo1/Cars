@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Cars.core.Domain;
+using Cars.core.Dto;
+
 namespace Cars.core.ServiceInterface
 {
     public interface ICarsSerivce
     {
-        Task<Car> List();
+        Task<Car> Create(CarsDto vm);
+        Task<Car> Edit(CarsDto vm);
     }
 }

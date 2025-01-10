@@ -1,4 +1,8 @@
+using Cars.ApplicationServices.Services;
+using Cars.core.ServiceInterface;
 using Cars.Data;
+using Cars.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +17,8 @@ builder.Services.AddDbContext<CarsDbContext>(options =>
 });
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<ICarsSerivce, CarServices>();
 
 var app = builder.Build();
 
