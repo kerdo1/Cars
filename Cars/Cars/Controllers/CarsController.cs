@@ -111,6 +111,29 @@ namespace Cars.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var car = await _context.Cars.FirstOrDefaultAsync(c => c.Id == id);
 
+            if (car == null)
+            {
+                Console.WriteLine("Car not found!");
+                return RedirectToAction(nameof(Index));
+            }
+
+            var carDetails = new CarDetailsViewModel
+            {
+                Id = car.Id,
+                Model = car.Model,
+                Color = car.Color,
+                Plate = car.Plate,
+                Mileage = car.Mileage,
+                Made = car.Made,
+                Added = car.Added
+            };
+
+            return View(carDetails);
+        }
     }
 }

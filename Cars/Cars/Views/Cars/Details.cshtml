@@ -1,0 +1,21 @@
+﻿@model CarDetailsViewModel
+
+<h1>Car Details</h1>
+
+<div class="card">
+    <div class="card-header">
+        <h2>@Model.Model</h2>
+    </div>
+    <div class="card-body">
+        <p><strong>Car ID:</strong> @Model.Id</p>
+        <p><strong>Model:</strong> @Model.Model</p>
+        <p><strong>Color:</strong> @Model.Color</p>
+        <p><strong>Plate:</strong> @Model.Plate</p>
+        <p><strong>Mileage:</strong> @Model.Mileage</p>
+        <p><strong>Made:</strong> @Model.Made.ToString("yyyy-MM-dd")</p>
+        <p><strong>Added:</strong> @Model.Added.ToString("yyyy-MM-dd")</p>
+    </div>
+    <div class="card-footer">
+        <a href="@Url.Action("Index", "Cars")" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
