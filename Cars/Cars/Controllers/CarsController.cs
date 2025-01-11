@@ -5,6 +5,7 @@ using Cars.Data;
 using Cars.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Cars.Controllers
 {
@@ -18,9 +19,42 @@ namespace Cars.Controllers
             _context = context;
             _carServices = carServices;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchModel, string searchColor, string searchPlate, int? searchMade, string searchMileage)
         {
-            var cars = await _context.Cars.Select(car => new CarsViewModel
+            var userSearch = _context.Cars.AsQueryable();
+
+            // Model filter
+            if (!string.IsNullOrEmpty(searchModel))
+                userSearch = userSearch.Where(car => car.Model.Contains(searchModel));
+
+            // Color filter
+            if (!string.IsNullOrEmpty(searchColor))
+                userSearch = userSearch.Where(car => car.Color.Contains(searchColor));
+
+            // Plate filter
+            if (!string.IsNullOrEmpty(searchPlate))
+                userSearch = userSearch.Where(car => car.Plate.Contains(searchPlate));
+
+            // Made filter (year only)
+            if (searchMade.HasValue)
+                userSearch = userSearch.Where(car => car.Made.Year == searchMade.Value);
+
+            // Mileage filter (as discussed earlier)
+            if (!string.IsNullOrEmpty(searchMileage))
+            {
+                userSearch = searchMileage switch
+                {
+                    "0-5000" => userSearch.Where(car => car.Mileage >= 0 && car.Mileage <= 5000),
+                    "5001-10000" => userSearch.Where(car => car.Mileage >= 5001 && car.Mileage <= 10000),
+                    "10001-20000" => userSearch.Where(car => car.Mileage >= 10001 && car.Mileage <= 20000),
+                    "20001-50000" => userSearch.Where(car => car.Mileage >= 20001 && car.Mileage <= 50000),
+                    "50001-100000" => userSearch.Where(car => car.Mileage >= 50001 && car.Mileage <= 100000),
+                    "100001+" => userSearch.Where(car => car.Mileage > 100000),
+                    _ => userSearch
+                };
+            }
+
+            var cars = await userSearch.Select(car => new CarsViewModel
             {
                 Id = car.Id,
                 Model = car.Model,
@@ -30,8 +64,11 @@ namespace Cars.Controllers
                 Made = car.Made
             }).ToListAsync();
 
+            ViewData["searchMade"] = searchMade;
             return View(cars);
         }
+
+
 
         [HttpGet]
         public IActionResult Create()

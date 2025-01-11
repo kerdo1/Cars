@@ -9,5 +9,8 @@
         public int Mileage { get; set; }
         public DateTime Made { get; set; }
 
+        public List<CarsViewModel> Cars { get; set; } = new List<CarsViewModel>();
+
+
     }
 }
