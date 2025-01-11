@@ -12,5 +12,6 @@ namespace Cars.core.ServiceInterface
     {
         Task<Car> Create(CarsDto vm);
         Task<Car> Edit(CarsDto vm);
+        Task Delete(Guid id);
     }
 }

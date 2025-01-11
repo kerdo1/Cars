@@ -20,7 +20,6 @@ namespace Cars.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            // Fetch cars from database and map to CarsViewModel
             var cars = await _context.Cars.Select(car => new CarsViewModel
             {
                 Id = car.Id,
@@ -31,7 +30,6 @@ namespace Cars.Controllers
                 Made = car.Made
             }).ToListAsync();
 
-            // Pass the list of cars to the Index view
             return View(cars);
         }
 
@@ -104,5 +102,15 @@ namespace Cars.Controllers
             var result = await _carServices.Edit(dto);
             return RedirectToAction(nameof(Index), vm);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _carServices.Delete(id);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
     }
 }

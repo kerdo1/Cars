@@ -8,6 +8,7 @@ using Cars.core.ServiceInterface;
 using Cars.Data;
 using Cars.core.Domain;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cars.ApplicationServices.Services
 {
@@ -38,19 +39,36 @@ namespace Cars.ApplicationServices.Services
 
         public async Task<Car> Edit(CarsDto dto)
         {
-            Car domain = new ();
+            var car = await _context.Cars.FirstOrDefaultAsync(c => c.Id == dto.Id);
+            if (car == null)
+            {
+                throw new KeyNotFoundException("Car not found.");
+            }
 
-            domain.Id = dto.Id;
-            domain.Model = dto.Model;
-            domain.Color = dto.Color;
-            domain.Plate = dto.Plate;
-            domain.Mileage = dto.Mileage;
+            car.Model = dto.Model;
+            car.Color = dto.Color;
+            car.Plate = dto.Plate;
+            car.Mileage = dto.Mileage;
 
-            _context.Cars.Update(domain);
+            _context.Cars.Update(car);
             await _context.SaveChangesAsync();
 
-            return domain;
+            return car;
 
         }
+
+        public async Task Delete(Guid id)
+        {
+            var car = await _context.Cars.FirstOrDefaultAsync(c => c.Id == id);
+            if (car == null)
+            {
+                throw new KeyNotFoundException("Car not found.");
+            }
+
+            _context.Cars.Remove(car);
+            await _context.SaveChangesAsync();
+        }
+
+
     }
 }
