@@ -61,7 +61,7 @@ namespace Cars.Controllers
                 Color = car.Color,
                 Plate = car.Plate,
                 Mileage = car.Mileage,
-                Made = car.Made
+                Made = car.Made,
             }).ToListAsync();
 
             ViewData["searchMade"] = searchMade;
@@ -74,7 +74,7 @@ namespace Cars.Controllers
         public IActionResult Create()
         {
             var cars = new AddCarViewModel();
-            return View("Create",cars);
+            return View("Create", cars);
         }
 
         [HttpPost]
@@ -93,7 +93,7 @@ namespace Cars.Controllers
             var result = await _carServices.Create(car);
             return RedirectToAction(nameof(Index), vm);
 
-           
+
         }
 
         [HttpGet]
@@ -128,7 +128,7 @@ namespace Cars.Controllers
         {
             var dto = new CarsDto()
             {
-                Id= vm.Id,
+                Id = vm.Id,
                 Model = vm.Model,
                 Color = vm.Color,
                 Plate = vm.Plate,

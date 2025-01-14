@@ -1,35 +1,47 @@
 ﻿@model Cars.Models.AddCarViewModel
 
-<h1>Add car to table</h1>
+<h1>Add Car</h1>
 
-<form method="post">
-<div class="mt-3">
-    <label class="form-label">Model</label>
-    <input type="text" class="form-control" asp-for="Model"/>
-</div>
-
-<div class="mt-3">
-    <label class="form-label">Color</label>
-    <input type="text" class="form-control" asp-for="Color"/>
-</div>
-
-<div class="mt-3">
-    <label class="form-label">Plate</label>
-    <input type="text" class="form-control" asp-for="Plate"/>
-</div>
-
-<div class="mt-3">
-    <label class="form-label">Mileage</label>
-    <input type="number" class="form-control" asp-for="Mileage"/>
-</div>
-
-<div class="mt-3">
-    <label class="form-label">Made</label>
-        <input type="datetime-local" class="form-control" asp-for="Made" />
+<div class="card">
+    <div class="card-header">
+        <h2>Add a New Car</h2>
     </div>
+    <div class="card-body">
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label"><strong>Model</strong></label>
+                <input type="text" class="form-control" asp-for="Model" />
+                <span asp-validation-for="Model" class="text-danger"></span>
+            </div>
 
+            <div class="mb-3">
+                <label class="form-label"><strong>Color</strong></label>
+                <input type="text" class="form-control" asp-for="Color" />
+                <span asp-validation-for="Color" class="text-danger"></span>
+            </div>
 
- <div class="mt-3">
-     <button type="submit" class="btn btn-primary">Save</button>
- </div>
-</form>
+            <div class="mb-3">
+                <label class="form-label"><strong>Plate</strong></label>
+                <input type="text" class="form-control" asp-for="Plate" />
+                <span asp-validation-for="Plate" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label"><strong>Mileage</strong></label>
+                <input type="number" class="form-control" asp-for="Mileage" />
+                <span asp-validation-for="Mileage" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label"><strong>Made</strong></label>
+                <input type="datetime-local" class="form-control" asp-for="Made" />
+                <span asp-validation-for="Made" class="text-danger"></span>
+            </div>
+
+            <div class="card-footer text-end">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a href="@Url.Action("Index", "Cars")" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

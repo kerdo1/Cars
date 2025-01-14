@@ -69,6 +69,18 @@ namespace Cars.ApplicationServices.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task<Car> GetById(Guid id)
+        {
+            var car = await _context.Cars.FirstOrDefaultAsync(c => c.Id == id);
+            if (car == null)
+            {
+                throw new KeyNotFoundException("Car not found.");
+            }
+
+            return car;
+        }
+
+
 
     }
 }
